@@ -39,7 +39,7 @@ const TrashColumn = ({ }: TrashColumnProps) => {
     const handleEmptyTrash = async () => {
         try {
             const response = await axios.delete("/api/tasks/empty-trash");
-            console.log(response)
+            // console.log(response)
 
             onActionSuccess();
 

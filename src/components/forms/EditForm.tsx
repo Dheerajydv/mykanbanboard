@@ -26,7 +26,6 @@ const EditForm = ({ task, onActionSuccess }: EditFormProps) => {
 
     async function onSubmit(values: z.infer<typeof editFromSchema>) {
         try {
-            console.log(values)
             const response = await axios.post(`/api/tasks/${task.id}/edit-task`, { ...values });
             onActionSuccess();
 

@@ -25,7 +25,7 @@ const TaskComponent = ({ task, onActionSuccess }: TaskComponentProps) => {
     const handleStatusChange = async (e: any) => {
         try {
             if (e.target.id === "mark-todo") {
-                console.log(e.target.id)
+                // console.log(e.target.id)
                 const response = await axios.post(`/api/tasks/${task.id}/change-status`, { newStatus: "todo" });
 
                 if (response.data.success === true) {
@@ -33,7 +33,7 @@ const TaskComponent = ({ task, onActionSuccess }: TaskComponentProps) => {
                 }
 
             } else if (e.target.id === "mark-doing") {
-                console.log(e.target.id)
+                // console.log(e.target.id)
                 const response = await axios.post(`/api/tasks/${task.id}/change-status`, { newStatus: "doing" });
 
                 if (response.data.success === true) {
@@ -41,16 +41,13 @@ const TaskComponent = ({ task, onActionSuccess }: TaskComponentProps) => {
                 }
 
             } else if (e.target.id === "mark-done") {
-                console.log(e.target.id)
+                // console.log(e.target.id)
                 const response = await axios.post(`/api/tasks/${task.id}/change-status`, { newStatus: "done" });
 
                 if (response.data.success === true) {
                     onActionSuccess();
                 }
-
             }
-
-
         } catch (error: any) {
             console.log(error.response.data.message)
         }

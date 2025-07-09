@@ -2,6 +2,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
+import { useState } from "react"
 
 interface AddFormProps {
     onActionSuccess: () => void
@@ -14,6 +15,8 @@ const addFromSchema = z.object({
 
 const AddTaskForm = ({ onActionSuccess }: AddFormProps) => {
 
+    const [errors, setErrors] = useState("");
+
     const { register, handleSubmit } = useForm<z.infer<typeof addFromSchema>>({
         resolver: zodResolver(addFromSchema),
         defaultValues: {
@@ -24,11 +27,13 @@ const AddTaskForm = ({ onActionSuccess }: AddFormProps) => {
 
     async function onSubmit(values: z.infer<typeof addFromSchema>) {
         try {
+            setErrors("");
             const response = await axios.post("/api/tasks/add", { ...values });
             onActionSuccess();
 
         } catch (error: any) {
-            console.log(error.response.data.message)
+            // console.log(error.response.data.message);
+            setErrors(error.response.data.message);
         }
     }
 
@@ -54,6 +59,7 @@ const AddTaskForm = ({ onActionSuccess }: AddFormProps) => {
                     <br />
                     <button className="btn btn-primary" type="submit">Add</button>
                 </form>
+                <p className="text-red-500 font-extralight">{errors === "" ? "" : errors}</p>
             </div>
 
         </div>

@@ -20,6 +20,7 @@ const KanbanBoard = () => {
     const [refreshToken, setRefreshToken] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [showTrash, setShowTrash] = useState(false);
+    const [errors, setErrors] = useState("");
 
     const onActionSuccess = useCallback(() => {
         setRefreshToken(prev => prev + 1)
@@ -27,13 +28,15 @@ const KanbanBoard = () => {
 
     const fetchTasks = async () => {
         setIsLoading(true)
+        setErrors("");
         try {
             const response = await axios.get("/api/tasks");
             // console.log(response.data.tasks)
             setTasks(response.data.tasks);
 
         } catch (error: any) {
-            console.log(error.response.data.message)
+            // console.log(error.response.data.message);
+            setErrors(error.response.data.message);
 
         } finally {
             setIsLoading(false)
@@ -59,6 +62,7 @@ const KanbanBoard = () => {
                     </button>
                 </div>
             </div>
+            <div><p className="text-red-500 font-extralight">{errors == "" ? "" : errors}</p></div>
             <div className="flex flex-col md:flex-row lg:flex-row lg:justify-center mt-4">
                 {isLoading ? <span className="loading loading-spinner text-primary"></span> :
                     showTrash ? <>
